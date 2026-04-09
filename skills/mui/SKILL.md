@@ -23,14 +23,17 @@ Website: https://merakiui.com
 MerakiUI has **two main sections**:
 
 ### Application UI (129 components, 18 categories)
+
 Alerts, Avatars, Breadcrumbs, Buttons, Cards, Cookies, Dropdowns, Forms, Inputs, Modals, Navbars, Pagination, Sidebar, Sign-in & Registration, Skeleton, Tables, Tabs, Tooltip
 
 ### Marketing (99 components, 13 categories)
+
 404 Pages, Blog, CTA, Contact, Email Templates, FAQ, Features, Footers, Heros, Portfolio, Pricing, Teams, Testimonials
 
 ## How to Find Components
 
 The full component catalog is at `components/_catalog.md` relative to this plugin's root directory. Read it to see all available components with their:
+
 - Variant names
 - File paths
 - Whether they use AlpineJS
@@ -70,7 +73,7 @@ Each variant in the preview file should be wrapped like this:
 
 ```html
 <div class="preview-panel" data-variant="Variant Name">
-    <!-- body content from the component HTML file goes here -->
+  <!-- body content from the component HTML file goes here -->
 </div>
 ```
 
@@ -78,7 +81,7 @@ The first panel should have class `preview-panel active`.
 
 ## Interaction Flows
 
-### `/mui:mui` (no arguments) — Browse Mode
+### `/mui` (no arguments) — Browse Mode
 
 1. Present the two sections with their categories:
 
@@ -124,13 +127,13 @@ The first panel should have class `preview-panel active`.
 2. Ask which category the user wants to explore.
 3. **Use the Multi-Preview System**: Select up to 4 best variants from that category, build the preview page, open it in the browser, and let the user choose.
 
-### `/mui:mui <search term>` — Search Mode
+### `/mui <search term>` — Search Mode
 
 1. Read `components/_catalog.md`.
 2. Find components matching the search term by variant name, category, or inferred use case.
 3. **Use the Multi-Preview System**: Select up to 4 best matching components, build the preview page, open it in the browser, and let the user choose.
 
-### `/mui:mui generate <description>` — Generate Mode
+### `/mui generate <description>` — Generate Mode
 
 1. Analyze the user's description to identify which MerakiUI components best match.
 2. **Use the Multi-Preview System**: Select up to 4 relevant variants, build the preview, let the user pick their favorite.
@@ -140,7 +143,7 @@ The first panel should have class `preview-panel active`.
    - Combine multiple component patterns if needed
 4. Output the customized HTML.
 
-### `/mui:mui page <description>` — Page Composition Mode
+### `/mui page <description>` — Page Composition Mode
 
 1. Analyze the description to identify needed page sections (navbar, hero, features, pricing, footer, etc.).
 2. **For each section**, use the Multi-Preview System:
@@ -159,33 +162,33 @@ The first panel should have class `preview-panel active`.
 - **Dark mode**: Preserve all `dark:` Tailwind variants. MerakiUI components include dark mode by default.
 - **Customization**: Replace placeholder content (Lorem ipsum, placeholder images, dummy names/emails) when the user provides specific content.
 
-### Full Page Output (`/mui:mui page` or when explicitly requested)
+### Full Page Output (`/mui page` or when explicitly requested)
 
 Wrap all components in a complete HTML document:
 
 ```html
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Page Title</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include AlpineJS only if any component uses it -->
     <script src="//unpkg.com/alpinejs" defer></script>
-</head>
-<body class="bg-white dark:bg-gray-900">
+  </head>
+  <body class="bg-white dark:bg-gray-900">
     <!-- Built with MerakiUI (https://merakiui.com) -->
-    
+
     <!-- Components here -->
-    
-</body>
+  </body>
 </html>
 ```
 
 ### AlpineJS Notice
 
 When outputting a component that uses AlpineJS (marked in the catalog), remind the user:
+
 > This component requires AlpineJS. Add `<script src="//unpkg.com/alpinejs" defer></script>` to your page.
 
 Components using AlpineJS include: Dropdowns, Modals, most Navbars, some Heros, and the Button Menu.
@@ -193,12 +196,14 @@ Components using AlpineJS include: Dropdowns, Modals, most Navbars, some Heros, 
 ### RTL Support
 
 If the user mentions RTL or languages like Arabic/Hebrew/Persian/Urdu:
+
 - Set `dir="rtl"` on the container or `<html>` tag
 - MerakiUI components are RTL-ready with Tailwind's RTL utilities
 
 ### Writing Components to Files
 
 When the user asks you to create a file or add a component to their project:
+
 - Use the Write or Edit tool to place the component in the user's specified file
 - If the user is building a project, integrate the component into their existing HTML/template structure
 - Ensure Tailwind CSS is configured in their project (check for `tailwind.config.js` or CDN link)
