@@ -1,6 +1,6 @@
 {
-  "name": "merakiui",
-  "version": "1.0.0",
+  "name": "mui",
+  "version": "1.1.0",
   "description": "Browse and generate beautiful UI components from MerakiUI — 228 free Tailwind CSS components with dark mode, RTL support, and responsive design.",
   "author": {
     "name": "Khatab Wedaa"

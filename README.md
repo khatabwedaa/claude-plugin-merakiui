@@ -18,7 +18,7 @@ This plugin brings [MerakiUI](https://merakiui.com)'s full component library int
 Once installed, using it is as simple as:
 
 ```
-/mui hero
+/mui:mui hero
 ```
 
 The browser opens with 4 hero designs and a bottom switcher bar. Navigate with arrow keys, pick your favorite, and Claude drops it into your project.
@@ -36,16 +36,27 @@ The browser opens with 4 hero designs and a bottom switcher bar. Navigate with a
   - [Application UI](#application-ui-129-components)
   - [Marketing](#marketing-99-components)
 - [Tech Stack](#tech-stack)
-- [Short Alias](#short-alias)
 - [Credits](#credits)
 - [License](#license)
 
 ## Installation
 
-Install the plugin in Claude Code:
+**Step 1:** Add the marketplace (one time):
 
 ```
-/plugin install khatabwedaa/claude-plugin-merakiui
+/plugin marketplace add khatabwedaa/claude-plugins-marketplace
+```
+
+**Step 2:** Install the plugin:
+
+```
+/plugin install mui@khatabwedaa-plugins
+```
+
+**Step 3:** Reload:
+
+```
+/reload-plugins
 ```
 
 That's it. No dependencies, no build step. The plugin bundles all 228 component templates.
@@ -55,7 +66,7 @@ That's it. No dependencies, no build step. The plugin bundles all 228 component 
 When you ask for a component, the plugin doesn't just give you one option — it opens **up to 4 design variants** in your browser with a sleek switcher bar at the bottom center.
 
 ```
-You: /mui hero
+You: /mui:mui hero
 Browser: Opens with 4 hero designs + bottom switcher (← 1/4 "Center Content" →)
 You: I like design 3
 Claude: Injects "Background Image" hero into your code
@@ -72,7 +83,7 @@ The switcher supports:
 ### Browse Components
 
 ```
-/merakiui
+/mui:mui
 ```
 
 Shows all categories. Pick one, and 4 best variants open in your browser for visual comparison.
@@ -80,8 +91,8 @@ Shows all categories. Pick one, and 4 best variants open in your browser for vis
 ### Search Components
 
 ```
-/merakiui pricing table
-/mui hero section
+/mui:mui pricing table
+/mui:mui hero section
 ```
 
 Finds matching components, opens up to 4 in the browser preview for you to choose from.
@@ -89,8 +100,8 @@ Finds matching components, opens up to 4 in the browser preview for you to choos
 ### Generate with Customization
 
 ```
-/merakiui generate a contact form with a map and social links
-/mui generate a dark-themed navbar with a search bar
+/mui:mui generate a contact form with a map and social links
+/mui:mui generate a dark-themed navbar with a search bar
 ```
 
 Shows you 4 matching designs to preview, then customizes your chosen one with your content.
@@ -98,8 +109,8 @@ Shows you 4 matching designs to preview, then customizes your chosen one with yo
 ### Compose Full Pages
 
 ```
-/merakiui page SaaS landing page with navbar, hero, features, pricing, and footer
-/mui page portfolio site with hero, project grid, testimonials, and contact form
+/mui:mui page SaaS landing page with navbar, hero, features, pricing, and footer
+/mui:mui page portfolio site with hero, project grid, testimonials, and contact form
 ```
 
 For each page section, shows design options to preview and choose from, then composes everything into a complete responsive page.
@@ -154,16 +165,6 @@ For each page section, shows design options to preview and choose from, then com
 - **Dark Mode** — Built-in `dark:` variants on all components
 - **RTL Support** — Right-to-left language ready
 - **Responsive** — Mobile-first, fully responsive design
-
-## Short Alias
-
-Use `/mui` as a shorthand for `/merakiui`:
-
-```
-/mui hero
-/mui generate a pricing table with 3 tiers
-/mui page landing page for a SaaS product
-```
 
 ## Credits
 
