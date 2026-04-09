@@ -10,6 +10,17 @@ Browse, search, and generate beautiful UI components from [MerakiUI](https://mer
 /plugin install khatabwedaa/claude-plugin-merakiui
 ```
 
+## Visual Preview & Choose
+
+When you ask for a component, the plugin doesn't just give you one option — it opens **up to 4 design variants** in your browser with a sleek switcher bar at the bottom. Navigate with arrow keys, pick your favorite, then tell Claude which one you want.
+
+```
+You: /mui hero
+Browser: Opens with 4 hero designs + bottom switcher (← 1/4 "Center Content" →)
+You: I like design 3
+Claude: Injects "Background Image" hero into your code
+```
+
 ## Usage
 
 ### Browse Components
@@ -18,7 +29,7 @@ Browse, search, and generate beautiful UI components from [MerakiUI](https://mer
 /merakiui
 ```
 
-Shows all available categories. Pick a category, then pick a variant to get the HTML code.
+Shows all categories. Pick one, and 4 best variants open in your browser for visual comparison.
 
 ### Search Components
 
@@ -27,7 +38,7 @@ Shows all available categories. Pick a category, then pick a variant to get the 
 /mui hero section
 ```
 
-Searches for components matching your query.
+Finds matching components, opens up to 4 in the browser preview for you to choose from.
 
 ### Generate with Customization
 
@@ -36,7 +47,7 @@ Searches for components matching your query.
 /mui generate a dark-themed navbar with a search bar
 ```
 
-Finds the best matching component and adapts it to your needs.
+Shows you 4 matching designs to preview, then customizes your chosen one.
 
 ### Compose Full Pages
 
@@ -45,7 +56,7 @@ Finds the best matching component and adapts it to your needs.
 /mui page portfolio site with hero, project grid, testimonials, and contact form
 ```
 
-Combines multiple MerakiUI components into a complete HTML page.
+For each page section, shows design options to preview and choose from, then composes everything into a complete page.
 
 ## Available Components
 

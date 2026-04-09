@@ -11,6 +11,7 @@ allowed_tools:
   - Grep
   - Write
   - Edit
+  - Bash
 ---
 
 # MerakiUI Component Assistant
@@ -37,6 +38,45 @@ The full component catalog is at `components/_catalog.md` relative to this plugi
 - Whether they use AlpineJS
 
 Individual component HTML files are at `components/{section}/{category}/{Variant}.html`.
+
+## Multi-Preview System (Core Feature)
+
+**IMPORTANT**: Whenever the user asks for a component, you MUST show multiple design options (up to 4) in a browser preview with a switcher, so they can visually compare and choose their favorite.
+
+### How the Preview Works
+
+1. **Select up to 4 variants** from the matching category. Pick the most visually distinct ones.
+2. **Read all selected HTML files** from the `components/` directory.
+3. **Build a preview page** using the template at `skills/merakiui/preview-template.html`:
+   - Read the template file
+   - For each variant, extract the `<body>` content and wrap it in a `<div class="preview-panel">` (first one also gets class `active`)
+   - Replace `<!--PREVIEW_PANELS_PLACEHOLDER-->` with the panels
+   - Replace `/*VARIANT_NAMES_PLACEHOLDER*/` with a JS array of variant name strings (e.g. `"Center Content", "Side Image", "Background Image", "Pattern"`)
+4. **Write the preview file** to `/tmp/merakiui-preview.html`
+5. **Open it in the browser** using: `open /tmp/merakiui-preview.html` (macOS) or `xdg-open /tmp/merakiui-preview.html` (Linux)
+6. **Tell the user**: "I've opened 4 designs in your browser. Use the arrow keys or click the dots to switch between them. Come back here when you've picked your favorite."
+7. **Show the list of variant names** in the terminal as a numbered list:
+   ```
+   Which design do you prefer?
+   1. Center Content
+   2. Side Image
+   3. Background Image
+   4. Pattern
+   ```
+8. **Wait for the user's choice** (they can type the number or name).
+9. **Inject the chosen component** into the user's code using Write/Edit tools, extracting only the body content (see Output Rules).
+
+### Preview Panel Format
+
+Each variant in the preview file should be wrapped like this:
+
+```html
+<div class="preview-panel" data-variant="Variant Name">
+    <!-- body content from the component HTML file goes here -->
+</div>
+```
+
+The first panel should have class `preview-panel active`.
 
 ## Interaction Flows
 
@@ -84,21 +124,19 @@ Individual component HTML files are at `components/{section}/{category}/{Variant
 | Testimonials | 8 |
 
 2. Ask which category the user wants to explore.
-3. Read the `_catalog.md` and list all variants in the selected category.
-4. When the user picks a variant, read the HTML file and present the **body content only** (see Output Rules).
+3. **Use the Multi-Preview System**: Select up to 4 best variants from that category, build the preview page, open it in the browser, and let the user choose.
 
 ### `/merakiui <search term>` — Search Mode
 
 1. Read `components/_catalog.md`.
 2. Find components matching the search term by variant name, category, or inferred use case.
-3. Present matching results as a list with file paths.
-4. When the user picks one, read the HTML file and present the body content.
+3. **Use the Multi-Preview System**: Select up to 4 best matching components, build the preview page, open it in the browser, and let the user choose.
 
 ### `/merakiui generate <description>` — Generate Mode
 
 1. Analyze the user's description to identify which MerakiUI components best match.
-2. Read the relevant HTML template file(s) from the `components/` directory.
-3. Adapt the template to the user's specific needs:
+2. **Use the Multi-Preview System**: Select up to 4 relevant variants, build the preview, let the user pick their favorite.
+3. After the user chooses, adapt the selected template to their specific needs:
    - Replace placeholder text with user-provided content
    - Adjust colors, layout, or structure as requested
    - Combine multiple component patterns if needed
@@ -107,10 +145,12 @@ Individual component HTML files are at `components/{section}/{category}/{Variant
 ### `/merakiui page <description>` — Page Composition Mode
 
 1. Analyze the description to identify needed page sections (navbar, hero, features, pricing, footer, etc.).
-2. Select the best MerakiUI component for each section.
-3. Read all relevant HTML template files.
-4. Compose them into a unified, full HTML page with consistent styling.
-5. Output as a complete HTML document (see Full Page output rules below).
+2. **For each section**, use the Multi-Preview System:
+   - Show up to 4 variants for the first/main section (e.g., hero)
+   - Let the user pick their preferred design for each major section
+   - For supporting sections (footer, etc.), pick the best match automatically or ask the user
+3. Compose all chosen components into a unified, full HTML page.
+4. Output as a complete HTML document (see Full Page output rules below).
 
 ## Output Rules
 

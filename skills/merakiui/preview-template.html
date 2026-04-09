@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MerakiUI Preview — Choose Your Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <style>
+        .preview-panel { display: none; }
+        .preview-panel.active { display: block; }
+
+        .switcher {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(17, 24, 39, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .switcher-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .switcher-btn:hover {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        .switcher-btn:active {
+            transform: scale(0.95);
+        }
+
+        .switcher-dots {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 8px;
+        }
+        .switcher-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        .switcher-dot.active {
+            background: #3b82f6;
+            box-shadow: 0 0 8px rgba(59,130,246,0.5);
+            width: 12px;
+            height: 12px;
+        }
+        .switcher-dot:hover:not(.active) {
+            background: rgba(255,255,255,0.4);
+        }
+
+        .switcher-label {
+            color: #e5e7eb;
+            font-size: 13px;
+            font-weight: 500;
+            min-width: 120px;
+            text-align: center;
+            white-space: nowrap;
+            padding: 0 4px;
+        }
+
+        .switcher-counter {
+            color: #9ca3af;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 0 4px;
+        }
+
+        .switcher-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Keyboard hint */
+        .switcher-hint {
+            color: #6b7280;
+            font-size: 10px;
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .switcher-hint kbd {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900">
+
+    <!-- ========== DESIGN PANELS ========== -->
+    <!-- Each panel wraps one component variant. Replace these with actual components. -->
+
+    <!--PREVIEW_PANELS_PLACEHOLDER-->
+
+    <!-- ========== SWITCHER BAR ========== -->
+    <div class="switcher" id="switcher">
+        <button class="switcher-btn" id="prevBtn" onclick="navigate(-1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+
+        <div class="switcher-divider"></div>
+
+        <span class="switcher-counter" id="counter">1 / 4</span>
+
+        <div class="switcher-divider"></div>
+
+        <span class="switcher-label" id="variantLabel">Variant Name</span>
+
+        <div class="switcher-divider"></div>
+
+        <div class="switcher-dots" id="dots"></div>
+
+        <div class="switcher-divider"></div>
+
+        <button class="switcher-btn" id="nextBtn" onclick="navigate(1)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+    </div>
+
+    <div class="switcher-hint">
+        Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> arrow keys to switch designs
+    </div>
+
+    <script>
+        // Variant names — replace with actual names when generating
+        const variants = [/*VARIANT_NAMES_PLACEHOLDER*/];
+
+        let current = 0;
+        const panels = document.querySelectorAll('.preview-panel');
+        const dotsContainer = document.getElementById('dots');
+        const label = document.getElementById('variantLabel');
+        const counter = document.getElementById('counter');
+
+        // Create dots
+        variants.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'switcher-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goTo(i);
+            dotsContainer.appendChild(dot);
+        });
+
+        function goTo(index) {
+            panels[current].classList.remove('active');
+            dotsContainer.children[current].classList.remove('active');
+
+            current = index;
+
+            panels[current].classList.add('active');
+            dotsContainer.children[current].classList.add('active');
+            label.textContent = variants[current];
+            counter.textContent = `${current + 1} / ${variants.length}`;
+        }
+
+        function navigate(dir) {
+            let next = current + dir;
+            if (next < 0) next = variants.length - 1;
+            if (next >= variants.length) next = 0;
+            goTo(next);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') navigate(-1);
+            if (e.key === 'ArrowRight') navigate(1);
+        });
+
+        // Initialize
+        if (panels.length > 0) {
+            panels[0].classList.add('active');
+            label.textContent = variants[0] || 'Design 1';
+            counter.textContent = `1 / ${variants.length}`;
+        }
+    </script>
+
+</body>
+</html>
