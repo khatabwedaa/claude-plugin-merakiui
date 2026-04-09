@@ -1,8 +1,6 @@
 ---
 name: merakiui
 description: Browse, search, and generate beautiful UI components from MerakiUI's Tailwind CSS component library.
-aliases:
-  - mui
 user_invocable: true
 argument_hint: "[search term | generate <description> | page <description>]"
 allowed_tools:
